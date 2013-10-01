@@ -47,7 +47,7 @@ private:
 
 
 	ID3D10Effect * m_pTemEffect;
-	ID3D10Buffer * m_pTempTechnique;
-	ID3D10InputLayout * m_pTempBuffer;
-	ID3D10EffectTechnique * m_pTempVertexLayout;
+	ID3D10Buffer * m_pTempBuffer;
+	ID3D10InputLayout * m_pTempVertexLayout;
+	ID3D10EffectTechnique * m_pTempTechnique;
 };

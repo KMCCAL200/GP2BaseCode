@@ -3,6 +3,19 @@
 #include <D3D10.h>
 #include <D3DX10.h>
 
+struct Vertex{float x,y,z;};
+
+const char basicEffect[]=\
+	"float4 VS( float4 Pos : POSITION ) : SV_POSITION"\
+	"{"\
+	"		return Pos;"\
+	"{"\
+	"float4 PS( float4 Pos : SC_POSITION ) : SV_TARGET"\
+	"{"\
+
+
+
+
 D3D10Renderer::D3D10Renderer()
 {
 	m_pD3D10Device=NULL;
@@ -52,8 +65,8 @@ bool D3D10Renderer::init(void *pWindowHandle,bool fullScreen)
 	
 	if (!createBuffer())
 		return false;
-	if (!createVertexLayout())
-		return false;
+	//if (!createVertexLayout())
+	//	return false;
 }
 
 bool D3D10Renderer::createDevice(HWND window,int windowWidth, int windowHeight,bool fullScreen)
@@ -173,4 +186,29 @@ void D3D10Renderer::present()
 }
 void D3D10Renderer::renderer()
 {
+}
+
+bool D3D10Renderer::createBuffer()
+{
+	Vertex verts[]={
+		{-1.0f,-1.0f,0.0f},
+		{0.0f,1.0f,0.0f},
+		{1.0f,-1.0f,0.0f}
+	};
+
+	D3D10_BUFFER_DESC bd;
+	bd.Usage = D3D10_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(Vertex)*3;
+	bd.BindFlags = D3D10_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+	bd.MiscFlags = 0;
+
+	D3D10_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = &verts;
+
+	if(FAILED(m_pD3D10Device->CreateBuffer(&bd, &InitData, &m_pTempBuffer)))
+	{
+		OutputDebugStringA("Can't create buffer");
+	}
+	return TRUE;
 }
